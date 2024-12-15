@@ -35,7 +35,7 @@ def recursive_solution():
       area, perim = area // 4, perim // 4
       res += area * perim
       
-  print(res)
+  # print(res)
 
 def bfs_solution():
   res = 0
