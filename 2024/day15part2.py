@@ -40,23 +40,23 @@ def move_box(r, c, dr, dc):
   if dr == 0:
     nr, nc = r + dr, c + dc
     num_blocks = 0
-    while in_bounds(nr, nc) and grid[nr][nc] == '[' or grid[nr][nc] == ']':
+    while in_bounds(nr, nc) and (grid[nr][nc] == '[' or grid[nr][nc] == ']'):
       num_blocks += 1
       nr, nc = nr + dr, nc + dc
+    num_blocks = num_blocks // 2
     
     if not in_bounds(nr, nc) or grid[nr][nc] == '#':
       return (r, c)
     
     for i in range(num_blocks):
-      if dc > 0:
-        grid[nr][nc] = '['
-        grid[nr - dr][nc - dc] = ']'
-      else:
-        grid[nr][nc] = ']'
-        grid[nr - dr][nc - dc] = '['
+      grid[nr][nc] = '['
+      grid[nr - dr][nc - dc] = ']'
       nr, nc = nr - 2 * dr, nc - 2 * dc
     
     return (nr, nc)
+  else:
+    # TODO
+    return
   
 
 def execute_move(robot, move):
@@ -72,12 +72,12 @@ def execute_move(robot, move):
   return move_box(r, c, dr, dc)
   
 for move in moves:
+  print_grid()
+  print()
   old_pos = robot
   robot = execute_move(robot, move)
   grid[old_pos[0]][old_pos[1]] = '.'
-  print(robot[0], robot[1])
   grid[robot[0]][robot[1]] = '@'
-  print_grid()
 
 res = 0
 for r in range(R):
